@@ -1,0 +1,11 @@
+com/skupina1/rateuser/repo/CommentDTO.class
+com/skupina1/rateuser/RatingUserApplication.class
+com/skupina1/rateuser/repo/User.class
+com/skupina1/rateuser/repo/UserRatingDTO.class
+com/skupina1/rateuser/repo/RatingsDAO.class
+com/skupina1/rateuser/repo/RatingDTO.class
+com/skupina1/rateuser/repo/RatingsDAOImpl.class
+com/skupina1/rateuser/user/UserRating.class
+com/skupina1/rateuser/dbSetup/DbConfig.class
+com/skupina1/rateuser/resource/RatingResource.class
+com/skupina1/rateuser/repo/UserDTO.class

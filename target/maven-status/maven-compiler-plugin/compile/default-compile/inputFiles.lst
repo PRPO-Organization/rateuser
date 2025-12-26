@@ -1,0 +1,11 @@
+/home/david/fri/3letnik/1/prpo/prpo-projekt/rateuser/src/main/java/com/skupina1/rateuser/resource/RatingResource.java
+/home/david/fri/3letnik/1/prpo/prpo-projekt/rateuser/src/main/java/com/skupina1/rateuser/repo/UserDTO.java
+/home/david/fri/3letnik/1/prpo/prpo-projekt/rateuser/src/main/java/com/skupina1/rateuser/user/UserRating.java
+/home/david/fri/3letnik/1/prpo/prpo-projekt/rateuser/src/main/java/com/skupina1/rateuser/repo/User.java
+/home/david/fri/3letnik/1/prpo/prpo-projekt/rateuser/src/main/java/com/skupina1/rateuser/repo/UserRatingDTO.java
+/home/david/fri/3letnik/1/prpo/prpo-projekt/rateuser/src/main/java/com/skupina1/rateuser/repo/CommentDTO.java
+/home/david/fri/3letnik/1/prpo/prpo-projekt/rateuser/src/main/java/com/skupina1/rateuser/repo/RatingsDAOImpl.java
+/home/david/fri/3letnik/1/prpo/prpo-projekt/rateuser/src/main/java/com/skupina1/rateuser/dbSetup/DbConfig.java
+/home/david/fri/3letnik/1/prpo/prpo-projekt/rateuser/src/main/java/com/skupina1/rateuser/RatingUserApplication.java
+/home/david/fri/3letnik/1/prpo/prpo-projekt/rateuser/src/main/java/com/skupina1/rateuser/repo/RatingDTO.java
+/home/david/fri/3letnik/1/prpo/prpo-projekt/rateuser/src/main/java/com/skupina1/rateuser/repo/RatingsDAO.java
