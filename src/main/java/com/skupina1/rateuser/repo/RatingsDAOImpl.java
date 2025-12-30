@@ -14,12 +14,15 @@ public class RatingsDAOImpl implements RatingsDAO {
     private EntityManager em;
 
     @Override
-    public Double getUserVotes(String user_id) {
+    public Double getUserVotes(Long user_id) {
         return 0.0;
     }
 
     @Override
-    public Double getUserRating(String user_id) {
+    public Double getUserRating(Long user_id) {
+        if (user_id == null) {
+            return 0.0;
+        }
         TypedQuery<Double> query  = em.createNamedQuery("UserRating.findAvgRating",Double.class)
                 .setParameter("id", user_id);
         return query.getSingleResult();
@@ -54,12 +57,12 @@ public class RatingsDAOImpl implements RatingsDAO {
     }
 
     @Override
-    public boolean removeUserRating(Short id) throws Exception{
-        if (id == null ){
+    public boolean removeUserRating(Long ratingId) throws Exception{
+        if (ratingId == null ){
             throw  new Exception("id is null");
         }
         try{
-            UserRating userRating = em.find(UserRating.class,id);
+            UserRating userRating = em.find(UserRating.class,ratingId);
             em.remove(userRating);
             em.persist(userRating);
             return true;
@@ -69,12 +72,20 @@ public class RatingsDAOImpl implements RatingsDAO {
     }
 
     @Override
-    public UserRating findUserRating(String rated_user_id) throws Exception {
-        return null;
+    public List<UserRating> findUserRatings(Long ratedUserId) throws Exception {
+       if (ratedUserId == null) {
+           throw  new Exception("id is null");
+       }
+       return this.em.createNamedQuery("UserRating.findAllRatings",UserRating.class)
+               .setParameter("id", ratedUserId)
+               .getResultList();
     }
 
     @Override
-    public List<CommentDTO> findComment(String rated_id) throws Exception {
+    public List<CommentDTO> findComment(Long rated_id) throws Exception {
+        if  (rated_id == null) {
+            throw  new Exception("rated_id is null");
+        }
         try {
             return em.createNamedQuery("UserRating.findAllComments", CommentDTO.class)
                     .setParameter("id", rated_id).getResultList();
@@ -95,10 +106,19 @@ public class RatingsDAOImpl implements RatingsDAO {
     }
 
     @Override
-    public User findUser(String usedId) throws Exception {
+    public User findUser(Long userId) throws Exception {
         return em.createNamedQuery("User.findById",User.class).getSingleResult();
     }
+    @Override
+    public int commentCount(Long ratedUserId){
+        if (ratedUserId == null) {
+            return -1 ;
+        }
+        return em.createNamedQuery("UserRating.findReviewCount",Integer.class)
+                .setParameter("id", ratedUserId)
+                .getSingleResult();
 
+    }
     public EntityManager getEm() {
         return em;
     }

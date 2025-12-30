@@ -17,7 +17,7 @@ import java.util.Date;
 public class User{
     @Column(name="user_id" , nullable = false)
     @Id
-    private String userId ;
+    private Long userId ;
     private String username ;
     private String email;
     @Temporal(TemporalType.TIMESTAMP)
@@ -30,13 +30,13 @@ public class User{
         }
     }
     public User(){}
-    public  User(String userId, String username, String email){
+    public  User(Long userId, String username, String email){
         this.userId = userId;
         this.email=email;
         this.username = username;
     }
 
-    public String getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
@@ -47,7 +47,7 @@ public class User{
         this.email = email;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 

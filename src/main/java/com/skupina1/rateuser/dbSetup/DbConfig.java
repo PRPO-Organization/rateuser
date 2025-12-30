@@ -6,14 +6,11 @@ import jakarta.ejb.Startup;
 @DataSourceDefinition(
         name = "java:app/jdbc/ratings",
         className = "org.postgresql.ds.PGSimpleDataSource",
-        url = "jdbc:postgresql://localhost:5432/user_ratings",
-        user = "david",
-        password = "password",
-        databaseName = "user_ratings",
-        serverName = "localhost",
+        serverName = "db",  // Change from "localhost" to "db"
         portNumber = 5432,
-        minPoolSize = 5,
-        maxPoolSize = 20
+        databaseName = "rateuser",
+        user = "rateuser",
+        password = "rateuser"
 )
 @Singleton
 @Startup

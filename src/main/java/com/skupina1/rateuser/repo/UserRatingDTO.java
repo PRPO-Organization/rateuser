@@ -3,13 +3,13 @@ package com.skupina1.rateuser.repo;
 import com.skupina1.rateuser.user.UserRating;
 
 public  class UserRatingDTO {
-    private String userId ;
+    private Long ratedUserId ;
     private short userRating;
     private String comment ;
     public UserRatingDTO() {
     }
-    public UserRatingDTO(String userId, short userRating,  String comment) {
-        this.userId = userId;
+    public UserRatingDTO(Long userId, short userRating,  String comment) {
+        this.ratedUserId= userId;
         this.userRating = userRating;
         this.comment = comment;
     }
@@ -17,11 +17,11 @@ public  class UserRatingDTO {
 
 
     }
-    public String getUserId() {
-        return userId;
+    public Long getRatedUserId() {
+        return ratedUserId;
     }
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setRatedUserId(Long userId) {
+        this.ratedUserId = userId;
     }
     public short getUserRating() {
         return userRating;

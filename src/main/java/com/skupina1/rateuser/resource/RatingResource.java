@@ -7,6 +7,8 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.container.ContainerRequestContext;
+import jakarta.ws.rs.container.ContainerResponseFilter;
 import jakarta.ws.rs.core.*;
 import jakarta.ws.rs.ext.Provider;
 
@@ -24,7 +26,7 @@ public  class RatingResource {
     @Produces(MediaType.APPLICATION_JSON)
 //    @Transactional
     @Path("{id}")
-    public Response getRating(@PathParam("id") String id) {
+    public Response getRating(@PathParam("id") Long id) {
         try {
             if (id == null) {
                 return Response.status(Response.Status.BAD_REQUEST)
@@ -86,7 +88,7 @@ public  class RatingResource {
     @GET
     @Path("{id}/comments")
     public Response getComments(
-            @PathParam("id") String id
+            @PathParam("id") Long id
     ) {
         try {
             if (id == null) {
@@ -139,8 +141,8 @@ public  class RatingResource {
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  @Path("/users{id}")
-  public Response getUser(@PathParam("id")String id ) {
+  @Path("/users/{id}")
+  public Response getRatings(@PathParam("id")Long id ) {
          try {
             if (id == null){
                 return Response.status(Response.Status.BAD_REQUEST)
@@ -148,16 +150,33 @@ public  class RatingResource {
                         .build();
             }
             EntityManager em = ratingsDAO.getEm();
-            User user = ratingsDAO.findUser(id);
-            if (user == null) {
+            List<UserRating> userRatings = ratingsDAO.findUserRatings(id);
+            if (userRatings == null) {
                 return Response.status(Response.Status.NOT_FOUND)
                         .entity("user not found")
                         .build();
             }
-            UserDTO userDTO = new UserDTO(user);
-            return Response.ok(userDTO).build();
+            return Response.ok(userRatings).build();
          } catch (Exception e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+             System.err.println(e.getMessage());
+            return Response.serverError().build();
          }
   }
+  //returns the number of reviews the user has
+  @GET
+  @Produces
+  @Path("/users")
+  public Response getReviewsCount(
+          @QueryParam("ratedUserId") Long ratedUserId
+  ) {
+        if (ratedUserId == null) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("ratedUserId is required")
+                    .build();
+        }
+        EntityManager em =  ratingsDAO.getEm();
+        Integer count = ratingsDAO.commentCount(ratedUserId);
+        return Response.ok(count).build();
+
+    }
 }

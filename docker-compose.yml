@@ -1,0 +1,32 @@
+
+services:
+  db:
+    image: postgres:15
+    container_name: rateuser-db
+    restart: always
+    environment:
+      POSTGRES_DB: rateuser
+      POSTGRES_USER: rateuser
+      POSTGRES_PASSWORD: rateuser
+    ports:
+      - "5435:5432"
+    volumes:
+      - rateuser_data:/var/lib/postgresql/data
+      - ./init/init.sql:/docker-entrypoint-initdb.d/init.sql  #
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U rateuser"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: .
+    container_name: rateuser-app
+    ports:
+      - "8085:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  rateuser_data:

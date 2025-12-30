@@ -5,7 +5,7 @@ import java.util.Date;
 
 
 public class UserDTO{
-    private String userId ;
+    private Long userId ;
     private String username ;
     private String email;
     public  UserDTO() {}
@@ -22,11 +22,11 @@ public class UserDTO{
         this.email = email;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public String getUserId() {
+    public Long  getUserId() {
         return userId;
     }
     public String getUsername() {
