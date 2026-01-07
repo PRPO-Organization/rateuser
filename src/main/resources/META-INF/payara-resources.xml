@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <jdbc-connection-pool name="ratingsPool"
+                          datasource-classname="org.postgresql.xa.PGXADataSource"
+                          res-type="javax.sql.XADataSource">
+        <property name="user" value="rateuser"/>
+        <property name="password" value="rateuser"/>
+        <property name="databaseName" value="rateuser"/>
+        <property name="serverName" value="rateuser-db"/>
+        <property name="portNumber" value="5432"/>
+    </jdbc-connection-pool>
+
+    <jdbc-resource pool-name="ratingsPool" jndi-name="jdbc/ratings"/>
+</resources>

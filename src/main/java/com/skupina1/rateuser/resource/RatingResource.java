@@ -26,24 +26,16 @@ public  class RatingResource {
     @Produces(MediaType.APPLICATION_JSON)
 //    @Transactional
     @Path("{id}")
-    public Response getRating(@PathParam("id") Long id) {
+    public Response getRating(@PathParam("id") Long ratedUserId) {
         try {
-            if (id == null) {
+            if (ratedUserId == null) {
                 return Response.status(Response.Status.BAD_REQUEST)
-                        .entity("id is required")
-                        .build();
-            }
-            Double avgRating = ratingsDAO.getUserRating(id);
-            User user = ratingsDAO.findUser(id);
-            if (avgRating == null) {
-                return Response.status(Response.Status.NOT_FOUND)
-                        .entity("rating not found")
-                        .build();
-            }
-            UserRatingDTO userRatingDTO = new UserRatingDTO();
-            return Response.ok(userRatingDTO)
-                    .entity("average rating received")
+                        .entity("id is null")
                     .build();
+            }
+            List<UserRating> userRatings = ratingsDAO.findUserRatings(ratedUserId);
+            return Response.ok(userRatings).build();
+
         } catch (Exception e) {
             return Response.status(Response.Status.BAD_REQUEST).
                     entity(e.getMessage())
@@ -64,6 +56,12 @@ public  class RatingResource {
             if (id  == null) {
                 return Response.status(Response.Status.BAD_REQUEST)
                         .entity("id is required")
+                        .build();
+            }
+
+            if (id.equals(rating.getRatedUserId())) {
+                return Response.status(Response.Status.BAD_REQUEST)
+                        .entity("user can not leave a rating to himself")
                         .build();
             }
             UserRating userRating = new UserRating(rating , id);
@@ -116,28 +114,6 @@ public  class RatingResource {
 //
 //    }
 //
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Path("users")
-    @Transactional
-    public Response uploadUserRating(UserDTO userDetails) {
-        try {
-            if  (userDetails == null) {
-                return Response.status(Response.Status.BAD_REQUEST)
-                        .entity("userDTO is required")
-                        .build();
-            }
-
-            EntityManager em = ratingsDAO.getEm();
-//            ratingsDAO.adduser(user);
-            User user = new User(userDetails);
-            em.persist(user);
-            return Response.created(uriInfo.getAbsolutePath()).build();
-        } catch (Exception e) {
-           return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
@@ -163,20 +139,27 @@ public  class RatingResource {
          }
   }
   //returns the number of reviews the user has
-  @GET
-  @Produces
-  @Path("/users")
-  public Response getReviewsCount(
-          @QueryParam("ratedUserId") Long ratedUserId
-  ) {
+
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/users/{id}/avg")
+    public Response getAverageRating(
+            @PathParam("id") Long  ratedUserId
+    ){
         if (ratedUserId == null) {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity("ratedUserId is required")
                     .build();
         }
         EntityManager em =  ratingsDAO.getEm();
-        Integer count = ratingsDAO.commentCount(ratedUserId);
-        return Response.ok(count).build();
-
+        Double avgRating = ratingsDAO.getAvgUserRating(ratedUserId);
+        if  (avgRating == null) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("person with that id is not found")
+                    .build();
+        }
+        return Response.ok(avgRating).build();
     }
+
 }

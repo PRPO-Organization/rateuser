@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: rate-user-service
+  namespace: prpo-microservices
+spec:
+  type: ClusterIP
+  selector:
+    app: rate-user
+  ports:
+    - port: 80
+      targetPort: 8080

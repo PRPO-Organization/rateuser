@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rateuser-db
+  namespace: prpo-microservices
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rateuser-db
+  template:
+    metadata:
+      labels:
+        app: rateuser-db
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:15
+          env:
+            - name: POSTGRES_DB
+              value: rateuser
+            - name: POSTGRES_USER
+              value: rateuser
+            - name: POSTGRES_PASSWORD
+              value: rateuser
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: postgres-storage
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: postgres-storage
+          persistentVolumeClaim:
+            claimName: rateuser-pvc

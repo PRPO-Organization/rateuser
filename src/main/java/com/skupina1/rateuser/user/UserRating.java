@@ -8,7 +8,7 @@ import jdk.jfr.Name;
 @NamedQueries({
                 @NamedQuery(
                         name = "UserRating.findAvgRating",
-                        query = "select AVG(ur.rating) from UserRating ur where ur.userId = :id"
+                        query = "select AVG(ur.rating) from UserRating ur where ur.ratedUserId = :id"
                 ),
                 @NamedQuery(
                         name = "UserRating.findAllComments",

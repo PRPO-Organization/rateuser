@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rateuser-app
+  namespace: prpo-microservices
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rateuser-app
+  template:
+    metadata:
+      labels:
+        app: rateuser-app
+    spec:
+      containers:
+        - name: payara
+          image: payara/micro:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_HOST
+              value: "rateuser-db"
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_USER
+              value: "rateuser"
+            - name: DB_PASSWORD
+              value: "rateuser"
+            - name: DB_NAME
+              value: "rateuser"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rateuser-app
+  namespace: prpo-microservices
+spec:
+  type: ClusterIP
+  selector:
+    app: rateuser-app
+  ports:
+    - port: 8080
+      targetPort: 8080
+

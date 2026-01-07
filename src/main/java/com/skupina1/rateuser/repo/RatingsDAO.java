@@ -7,7 +7,7 @@ import java.util.List;
 
 interface RatingsDAO {
     Double getUserVotes(Long user_id);
-    Double getUserRating(Long rated_user_id);
+    Double getAvgUserRating(Long rated_user_id);
     boolean addUserRating(UserRating userRatingDTO) throws Exception;
     boolean changeUserRating(UserRating userRatingDTO) throws Exception;
     boolean removeUserRating(Long  ratingId) throws Exception;

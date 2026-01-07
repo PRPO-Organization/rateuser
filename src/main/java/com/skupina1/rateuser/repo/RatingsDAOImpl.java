@@ -19,13 +19,14 @@ public class RatingsDAOImpl implements RatingsDAO {
     }
 
     @Override
-    public Double getUserRating(Long user_id) {
+    public Double getAvgUserRating(Long user_id) {
         if (user_id == null) {
+            System.out.println("user_id is null");
             return 0.0;
         }
-        TypedQuery<Double> query  = em.createNamedQuery("UserRating.findAvgRating",Double.class)
-                .setParameter("id", user_id);
-        return query.getSingleResult();
+        Double avgRating = em.createNamedQuery("UserRating.findAvgRating",Double.class)
+                .setParameter("id", user_id).getSingleResult();
+        return avgRating == null ? 0.0 : avgRating;
     }
 
 //    @Override

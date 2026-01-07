@@ -16,7 +16,7 @@ FROM payara/micro:latest
 
 # Copy PostgreSQL driver
 COPY drivers/postgresql-42.7.4.jar /opt/payara/lib/
-
+ENV JAVA_OPTIONS="-Djavax.xml.accessExternalSchema=all"
 # Copy configuration and application
 COPY postboot.asadmin /opt/payara/postboot.asadmin
 COPY --from=build /app/target/rateuser-1.0-SNAPSHOT.war /opt/payara/deployments/rateuser.war

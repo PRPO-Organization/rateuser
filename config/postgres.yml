@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pvc
+  namespace: prpo-microservices
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rateuser-db
+  namespace: prpo-microservices
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rateuser-db
+  template:
+    metadata:
+      labels:
+        app: rateuser-db
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:15
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: "rateuser"
+            - name: POSTGRES_USER
+              value: "rateuser"
+            - name: POSTGRES_PASSWORD
+              value: "rateuser"
+          volumeMounts:
+            - name: postgres-data
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: postgres-data
+          persistentVolumeClaim:
+            claimName: postgres-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rateuser-db
+  namespace: prpo-microservices
+spec:
+  type: ClusterIP
+  selector:
+    app: rateuser-db
+  ports:
+    - port: 5432
+      targetPort: 5432
+

@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rate-user
+  namespace: prpo-microservices
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rate-user
+  template:
+    metadata:
+      labels:
+        app: rate-user
+    spec:
+      containers:
+        - name: rate-user
+          image: prporegistry.azurecr.io/rateuser-app:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_HOST
+              value: "rateuser-db"
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_NAME
+              value: "rateuser"
+            - name: DB_USER
+              value: "rateuser"
+            - name: DB_PASSWORD
+              value: "rateuser"
