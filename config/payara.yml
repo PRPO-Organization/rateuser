@@ -20,15 +20,27 @@ spec:
             - containerPort: 8080
           env:
             - name: DB_HOST
-              value: "rateuser-db"
+              valueFrom:
+                secretKeyRef:
+                  name: rateuser-db
+                  key: DB_HOST
             - name: DB_PORT
-              value: "5432"
-            - name: DB_USER
-              value: "rateuser"
-            - name: DB_PASSWORD
-              value: "rateuser"
+              value: 5432
             - name: DB_NAME
-              value: "rateuser"
+              valueFrom:
+                secretKeyRef:
+                  name: rateuser-db
+                  key: DB_NAME
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: rateuser-db
+                  key: DB_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: rateuser-db
+                  key: DB_PASSWORD
 ---
 apiVersion: v1
 kind: Service

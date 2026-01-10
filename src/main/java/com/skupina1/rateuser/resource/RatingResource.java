@@ -1,18 +1,26 @@
 package com.skupina1.rateuser.resource;
 
-import com.skupina1.rateuser.repo.*;
+import java.util.List;
+
+import com.skupina1.rateuser.repo.CommentDTO;
+import com.skupina1.rateuser.repo.RatingsDAOImpl;
+import com.skupina1.rateuser.repo.UserRatingDTO;
 import com.skupina1.rateuser.user.UserRating;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
-import jakarta.ws.rs.*;
-import jakarta.ws.rs.container.ContainerRequestContext;
-import jakarta.ws.rs.container.ContainerResponseFilter;
-import jakarta.ws.rs.core.*;
-import jakarta.ws.rs.ext.Provider;
-
-import java.util.List;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriInfo;
 
 @ApplicationScoped
 @Path("/ratings")

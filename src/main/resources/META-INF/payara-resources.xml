@@ -4,7 +4,7 @@
                           datasource-classname="org.postgresql.xa.PGXADataSource"
                           res-type="javax.sql.XADataSource">
         <property name="user" value="rateuser"/>
-        <property name="password" value="rateuser"/>
+        <property name="password" value=""/>
         <property name="databaseName" value="rateuser"/>
         <property name="serverName" value="rateuser-db"/>
         <property name="portNumber" value="5432"/>
