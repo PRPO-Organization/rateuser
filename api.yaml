@@ -1,0 +1,201 @@
+openapi: 3.0.0
+info:
+  title: Ratings API
+  description: API for managing user ratings and comments
+  version: 1.0.0
+servers:
+- url: http://0.0.0.0:8085/api
+paths:
+  /ratings/{id}:
+    get:
+      tags:
+      - Ratings
+      summary: Get all ratings for user by ID
+      operationId: getRatingByUserId
+      parameters:
+      - name: id
+        in: path
+        description: User ID to retrieve ratings for
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: List of user ratings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserRating"
+        "400":
+          description: Bad Request - invalid or missing parameters
+    post:
+      tags:
+      - Ratings
+      summary: Upload a rating for a user by ID
+      operationId: uploadRatingForUser
+      parameters:
+      - name: id
+        in: path
+        description: User ID to upload rating for
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        description: Rating data to upload
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserRatingDTO"
+        required: true
+      responses:
+        "201":
+          description: Rating created successfully
+        "400":
+          description: Bad Request - invalid input
+        "500":
+          description: Internal Server Error - persistence failure
+  /ratings/{id}/comments:
+    get:
+      tags:
+      - Ratings
+      summary: Get all comments for user by ID
+      operationId: getCommentsByUserId
+      parameters:
+      - name: id
+        in: path
+        description: User ID to retrieve comments for
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: List of comments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CommentDTO"
+        "400":
+          description: Bad Request - invalid or missing parameters
+        "404":
+          description: Not Found - user or comments not found
+  /ratings/users/{id}:
+    get:
+      tags:
+      - Ratings
+      summary: Get all ratings for user by ID (alternative endpoint)
+      operationId: getRatingsByUserId
+      parameters:
+      - name: id
+        in: path
+        description: User ID to retrieve ratings for
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: List of user ratings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserRating"
+        "400":
+          description: Bad Request - invalid or missing parameters
+        "404":
+          description: Not Found - user not found
+  /ratings/users/{id}/avg:
+    get:
+      tags:
+      - Ratings
+      summary: Get average rating for user by ID
+      operationId: getAverageRatingByUserId
+      parameters:
+      - name: id
+        in: path
+        description: User ID to retrieve average rating for
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Average rating value
+          content:
+            application/json:
+              schema:
+                type: number
+                format: double
+        "400":
+          description: Bad Request - invalid or missing parameters
+        "404":
+          description: Not Found - user not found
+components:
+  schemas:
+    UserRating:
+      required:
+      - ratedUserId
+      - rating
+      - userId
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier of the rating
+          format: int64
+        userId:
+          type: integer
+          description: ID of the user who gave the rating
+          format: int64
+        ratedUserId:
+          type: integer
+          description: ID of the user who was rated
+          format: int64
+        rating:
+          type: integer
+          description: Rating value (short integer)
+          format: int32
+        comment:
+          type: string
+          description: Optional comment for the rating
+      description: A rating record for a user
+    UserRatingDTO:
+      required:
+      - ratedUserId
+      - userRating
+      type: object
+      properties:
+        userRating:
+          type: integer
+          description: Rating value
+          format: int32
+        ratedUserId:
+          type: integer
+          description: ID of the user being rated
+          format: int64
+        comment:
+          type: string
+          description: Optional comment
+      description: Payload to upload a user rating
+    CommentDTO:
+      required:
+      - comment
+      - userId
+      type: object
+      properties:
+        userId:
+          type: integer
+          description: ID of the user who made the comment
+          format: int64
+        comment:
+          type: string
+          description: The comment text
+      description: Comment representation
