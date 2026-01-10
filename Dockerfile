@@ -13,9 +13,8 @@ RUN mvn clean package -DskipTests
 
 # ---------- RUNTIME STAGE ----------
 FROM payara/micro:latest
-
+RUN curl -L -o /opt/payara/lib/postgresql.jar https://jdbc.postgresql.org/download/postgresql-42.7.4.jar
 # Copy PostgreSQL driver
-COPY drivers/postgresql-42.7.4.jar /opt/payara/lib/
 ENV JAVA_OPTIONS="-Djavax.xml.accessExternalSchema=all"
 # Copy configuration and application
 COPY postboot.asadmin /opt/payara/postboot.asadmin
