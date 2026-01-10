@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: rate-user
-          image: prporegistry.azurecr.io/rateuser-app:4134b950490bd5203b78c18d66119ff35bf6346e
+          image: prporegistry.azurecr.io/rateuser-app:34fe42b3b68ce273c4168f16583ae310e928a09e
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
