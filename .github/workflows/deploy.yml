@@ -18,6 +18,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Configure git authentication
+        run: |
+            git config --global url."https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
       - name: Login to ACR
         uses: docker/login-action@v2
         with:
