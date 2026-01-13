@@ -1,12 +1,12 @@
 package com.skupina1.rateuser.repo;
 
-import com.skupina1.rateuser.user.UserRating;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.persistence.EntityManager;
-import jakarta.inject.Inject;
-import jakarta.persistence.TypedQuery;
-
 import java.util.List;
+
+import com.skupina1.rateuser.user.UserRating;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
 
 @ApplicationScoped
 public class RatingsDAOImpl implements RatingsDAO {

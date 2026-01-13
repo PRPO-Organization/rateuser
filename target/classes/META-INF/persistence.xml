@@ -10,8 +10,7 @@
         <jta-data-source>jdbc/ratings</jta-data-source>
         <class>com.skupina1.rateuser.user.UserRating</class>
         <class>com.skupina1.rateuser.repo.User</class>
-
-            <properties>
+properties>
                 <property name="eclipselink.target-database" value="PostgreSQL"/>
                 <property name="eclipselink.logging.level" value="FINE"/>
                 <property name="eclipselink.logging.parameters" value="true"/>

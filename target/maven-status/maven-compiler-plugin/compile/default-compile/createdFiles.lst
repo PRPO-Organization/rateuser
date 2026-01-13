@@ -4,7 +4,6 @@ com/skupina1/rateuser/RatingUserApplication.class
 com/skupina1/rateuser/repo/User.class
 com/skupina1/rateuser/repo/UserRatingDTO.class
 com/skupina1/rateuser/config/CorsFilter.class
-com/skupina1/rateuser/health/LivenessCheck.class
 com/skupina1/rateuser/repo/RatingsDAO.class
 com/skupina1/rateuser/repo/RatingsDAOImpl.class
 com/skupina1/rateuser/resource/HealthCheckResource.class

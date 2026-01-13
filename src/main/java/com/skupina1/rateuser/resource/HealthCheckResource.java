@@ -7,7 +7,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-@Path("/health")
+@Path("/ratings/health")
 public class HealthCheckResource {
     
     @GET
@@ -22,7 +22,6 @@ public class HealthCheckResource {
     @Path("/ready")
     @Produces(MediaType.APPLICATION_JSON)
     public Response ready() {
-        // Add database connectivity check
         boolean dbHealthy = checkDatabase();
         
         if (dbHealthy) {
@@ -46,7 +45,6 @@ public class HealthCheckResource {
     }
     
     private boolean checkDatabase() {
-        // Implement your database check
         try {
             // Example: simple query to verify connection
             // entityManager.createNativeQuery("SELECT 1").getSingleResult();
