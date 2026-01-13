@@ -24,12 +24,22 @@ spec:
               value: "rateuser-db"
             - name: DB_PORT
               value: "5432"
-            - name: DB_NAME
-              value: "rateuser"
             - name: DB_USER
-              value: "rateuser"
+              valueFrom:
+                secretKeyRef:
+                  name: rateuser-secret 
+                  key: DB_USER
+            
             - name: DB_PASSWORD
-              value: "rateuser"
+              valueFrom:
+                secretKeyRef:
+                  name:  rateuser-secret
+                  key: DB_PASSWORD
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: rateuser-secret 
+                  key: DB_NAME
       livenessProbe:
         httpGet:
           path: /api/ratings/health/live
