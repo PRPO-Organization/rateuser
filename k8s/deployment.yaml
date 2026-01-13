@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: rate-user
-          image: prporegistry.azurecr.io/rateuser-app:0e216c90ee6e62912adf2f66d93d9b19ab4198a7
+          image: prporegistry.azurecr.io/rateuser-app:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
@@ -27,36 +27,36 @@ spec:
             - name: DB_USER
               valueFrom:
                 secretKeyRef:
-                  name: rateuser-secret 
+                  name: rateuser-secret
                   key: DB_USER
-            
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name:  rateuser-secret
+                  name: rateuser-secret
                   key: DB_PASSWORD
             - name: DB_NAME
               valueFrom:
                 secretKeyRef:
-                  name: rateuser-secret 
+                  name: rateuser-secret
                   key: DB_NAME
-      livenessProbe:
-        httpGet:
-          path: /api/ratings/health/live
-          port: 8080
-        initialDelaySeconds: 60
-        periodSeconds: 10
-        timeoutSeconds: 5
-        failureThreshold: 3
-      startupProbe:
-        httpGet:
-          path: /api/ratings/health/live
-          port: 8080
-        initialDelaySeconds: 0
-        periodSeconds: 10
-        timeoutSeconds: 3
-        failureThreshold: 12  
 
+          livenessProbe:
+            httpGet:
+              path: /api/ratings/health/live
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+
+          startupProbe:
+            httpGet:
+              path: /api/ratings/health/live
+              port: 8080
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 12
+---
 apiVersion: v1
 kind: Service
 metadata:
